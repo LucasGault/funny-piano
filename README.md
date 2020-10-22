@@ -1,3 +1,4 @@
+# Lucas Gault
 # The emoji piano
 
 Les consignes sont dans le wiki.

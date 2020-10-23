@@ -32,7 +32,7 @@
 </template>
 
 <script lang="js">
-    import {GiphyFetch} from '@giphy/js-fetch-api'
+    import { GiphyFetch } from '@giphy/js-fetch-api'
     export default {
         name: 'Body',
         data() {
@@ -47,7 +47,7 @@
             }
         },
         mounted() {
-            this.gf = new GiphyFetch('hoc7Xw81iwUP2iewXhekupQznVmYDlHK')
+            this.gf = new GiphyFetch('33cExsArNV2S2pW9p5y8R5MVALVXGKz7')
             const emoji = async () => {
                 try {
                     const result = await this.gf.emoji({

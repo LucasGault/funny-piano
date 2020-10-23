@@ -86,8 +86,9 @@
             onClick(ev) {
                 this.rand = Math.floor(Math.random() * 97)
                 this.rand2 = Math.floor(Math.random() * 97)
-                this.ramdomEmoji()
                 this.resetClavier()
+                this.ramdomEmoji()
+
                 switch (ev.target.classList[1]) {
                     case "C":
                         this.addSon('C')
@@ -171,63 +172,77 @@
                 if (this.isDown) return
                 this.rand = Math.floor(Math.random() * 97)
                 this.rand2 = Math.floor(Math.random() * 97)
-                this.ramdomEmoji()
                 this.resetClavier()
                 switch (ev.keyCode) {
                     case 81: //Q
                         document.querySelector('.C').classList.toggle("activeB")
                         this.$refs.do.style.opacity = 1
                         this.addSon('C')
+                        this.ramdomEmoji()
                         break;
                     case 90: //Z
                         document.querySelector('.Cd').classList.toggle("activeN")
                         this.addSon('C%23')
+                        this.ramdomEmoji()
                         break;
                     case 83: //S
                         document.querySelector('.D').classList.toggle("activeB")
                         this.$refs.re.style.opacity = 1
                         this.addSon('D')
+                        this.ramdomEmoji()
                         break;
                     case 69: //E
                         document.querySelector('.Dd').classList.toggle("activeN")
                         this.addSon('D%23')
+                        this.ramdomEmoji()
                         break;
                     case 68: //D
                         document.querySelector('.E').classList.toggle("activeB")
                         this.addSon('E')
                         this.$refs.mi.style.opacity = 1
+                        this.ramdomEmoji()
                         break;
                     case 70: //F
                         document.querySelector('.F').classList.toggle("activeB")
                         this.addSon('F')
                         this.$refs.fa.style.opacity = 1
+                        this.ramdomEmoji()
                         break;
                     case 84: //T
                         document.querySelector('.Fd').classList.toggle("activeN")
                         this.addSon('F%23')
+                        this.ramdomEmoji()
                         break;
                     case 71: //G
                         document.querySelector('.G').classList.toggle("activeB")
                         this.addSon('G')
                         this.$refs.sol.style.opacity = 1
+                        this.ramdomEmoji()
                         break;
                     case 89: //Y
                         document.querySelector('.Gd').classList.toggle("activeN")
                         this.addSon('G%23')
+                        this.ramdomEmoji()
                         break;
                     case 72: //H
                         document.querySelector('.A').classList.toggle("activeB")
                         this.addSon('A')
                         this.$refs.la.style.opacity = 1
+                        this.ramdomEmoji()
                         break;
                     case 85: //U
                         document.querySelector('.Ad').classList.toggle("activeN")
                         this.addSon('A%23')
+                        this.ramdomEmoji()
                         break;
                     case 74: //J
                         document.querySelector('.B').classList.toggle("activeB")
                         this.addSon('B')
                         this.$refs.si.style.opacity = 1
+                        this.ramdomEmoji()
+                        break;
+                    default:
+                        
                         break;
                 }
                 this.isDown = true

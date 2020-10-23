@@ -2,7 +2,8 @@
     <div class="MainBody">
         <h1 class="title">The emoji piano</h1>
         <div class="emoji">
-            <img v-if="emoji" :src="emoji" alt="Random Emoji">
+            <img v-if="emoji && !current" :src="emoji" alt="Random Emoji">
+            <img v-if="emoji2 && current" :src="emoji2" alt="Random Emoji">
         </div>
         <div class="piano">
             <div class="toucheB C touche"></div>
@@ -31,22 +32,22 @@
 </template>
 
 <script lang="js">
-    import {
-        GiphyFetch
-    } from '@giphy/js-fetch-api'
+    import {GiphyFetch} from '@giphy/js-fetch-api'
     export default {
         name: 'Body',
         data() {
             return {
-                // audio: document.createElement('audio'),
                 emoji: null,
+                emoji2: null,
+                rand: null,
+                rand2: null,
                 gf: null,
                 tab: [],
+                current: null
             }
         },
         mounted() {
             this.gf = new GiphyFetch('hoc7Xw81iwUP2iewXhekupQznVmYDlHK')
-            // console.log(gf)
             const emoji = async () => {
                 try {
                     const result = await this.gf.emoji({
@@ -55,7 +56,6 @@
                     result.data.forEach(el => {
                         this.tab.push(el.images.fixed_width.webp)
                     });
-                    // console.log(this.tab)
                 } catch (error) {
                     console.error(`emoji`, error)
                 }
@@ -84,8 +84,9 @@
                 document.removeEventListener('keyup', this.onKeyUp)
             },
             onClick(ev) {
-                const random = Math.floor(Math.random() * 97)
-                this.ramdomEmoji(random)
+                this.rand = Math.floor(Math.random() * 97)
+                this.rand2 = Math.floor(Math.random() * 97)
+                this.ramdomEmoji()
                 this.resetClavier()
                 switch (ev.target.classList[1]) {
                     case "C":
@@ -147,12 +148,10 @@
                         break;
                 }
             },
-            
             resetClavier () {
                 const notes = document.querySelectorAll('.notes')
                 notes.forEach(note => {
                     note.style.opacity = 0.4
-                    // console.log(note.style)
                 });
                 if (document.querySelector('.activeB')) {
                     const toucheAB = document.querySelector('.activeB')
@@ -163,15 +162,16 @@
                     toucheAN.classList.remove('activeN')
                 }
             },
-
-            ramdomEmoji(random) {
-                this.emoji = this.tab[random]
+            ramdomEmoji() {
+                this.current = !this.current
+                this.emoji = this.tab[this.rand]
+                this.emoji2 = this.tab[this.rand2]
             },
-
             onKeyDown(ev)  {
                 if (this.isDown) return
-                const random = Math.floor(Math.random() * 97)
-                this.ramdomEmoji(random)
+                this.rand = Math.floor(Math.random() * 97)
+                this.rand2 = Math.floor(Math.random() * 97)
+                this.ramdomEmoji()
                 this.resetClavier()
                 switch (ev.keyCode) {
                     case 81: //Q
@@ -230,8 +230,6 @@
                         this.$refs.si.style.opacity = 1
                         break;
                 }
-                
-                // console.log(ev.keyCode) // 16 = shift
                 this.isDown = true
             },
             onKeyUp () {
@@ -252,38 +250,31 @@
         @apply text-center pt-10 h-screen w-screen;
         background: linear-gradient(135deg, #FF9D6C 0%, #BB4E75 100%);
     }
-
     .title {
         @apply bg-black-bg text-white mx-auto font-normal rounded-xl text-3xl py-3 px-8 w-auto inline-block;
         line-height: 33.6px;
     }
-
     .emoji {
         @apply mx-auto mt-12 mb-24;
         width: 200px;
         height: 200px;
     }
-
     @screen lg {
         .emoji {
             @apply mx-auto mt-8 mb-16;
         }
     }
-
-
     .piano {
         @apply mx-auto bg-black flex justify-between relative p-3 mx-6;
         border-radius: 10px;
         height: 189px;
         width: 368px;
     }
-
     .toucheB {
         @apply bg-white;
         height: 166px;
         width: 45px;
     }
-
     .toucheN {
         @apply bg-black absolute;
         height: 120px;
@@ -291,93 +282,73 @@
         border-radius: 0px 0px 5px 5px;
         top: 6.5%;
     }
-
     .toucheB:first-child {
         border-radius: 5px 0px 0px 5px;
     }
-
     .toucheB:last-child {
         border-radius: 0px 5px 5px 0px;
     }
-
     .toucheB:hover {
         @apply bg-yellow-touche;
     }
-
     .toucheN:hover {
         @apply bg-purple-touche;
     }
-
     .activeB {
         @apply bg-yellow-touche;
     }
-
     .activeN {
         @apply bg-purple-touche;
     }
-
     .activeNote {
         opacity: 1;
     }
-
     .piano div:nth-child(2) {
         left: 12.81%;
     }
-
     .piano div:nth-child(4) {
         left: 26.55%;
     }
-
     .piano div:nth-child(7) {
         left: 54.05%;
     }
-
     .piano div:nth-child(9) {
         left: 67.8%;
     }
-
     .piano div:nth-child(11) {
         left: 81.54%;
     }
-
     .container_notes {
         @apply mx-auto flex pt-12 justify-between mx-10;
     }
-
     .notes {
         @apply text-xl;
         color: rgba(255, 255, 255);
         opacity: 0.4;
     }
-
     @screen md {
         .piano {
             @apply mx-auto;
             height: 276px;
             width: 531px;
         }
-
         .toucheB {
             height: 252px;
             width: 69px;
         }
-
         .toucheN {
             height: 184px;
             width: 30px;
             top: 4.35%;
         }
-
         .container_notes {
             @apply mx-auto;
             width: 462px;
         }
     }
-
     @media (max-width: 375px) {
         .container_notes {
             @apply invisible;
-
         }
         .piano {
             height: 162px;
@@ -405,7 +376,6 @@
             height: 116px;
             width: 33px;
         }
-
         .toucheN {
             height: 85px;
             width: 15px;

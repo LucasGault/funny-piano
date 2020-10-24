@@ -47,12 +47,10 @@
             }
         },
         mounted() {
-            this.gf = new GiphyFetch('33cExsArNV2S2pW9p5y8R5MVALVXGKz7')
+            this.gf = new GiphyFetch('hoc7Xw81iwUP2iewXhekupQznVmYDlHK')
             const emoji = async () => {
                 try {
-                    const result = await this.gf.emoji({
-                        limit: 97
-                    })
+                    const result = await this.gf.emoji({ limit: 97 })
                     result.data.forEach(el => {
                         this.tab.push(el.images.fixed_width.webp)
                     });

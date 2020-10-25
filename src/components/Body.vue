@@ -394,5 +394,8 @@
             width: 15px;
             top: 8.5%;
         }
+        .emoji {
+            @apply mx-auto mt-4 mb-4;
+        }
     }
 </style>
